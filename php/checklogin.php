@@ -6,7 +6,10 @@
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
-	$result_query = mysqli_query($con, "SELECT * FROM `user` WHERE `email` = '$email' AND `password` = '$password'");
+	$result_statement = mysqli_prepare($con, "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?");
+	$result_statement->bind_param("ss",$email,$password);
+	$result_statement->execute();
+	$result_query=$result_statement->get_result();
 	$row = mysqli_fetch_array($result_query);
 	$count_query = mysqli_num_rows($result_query);
 
