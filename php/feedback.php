@@ -18,8 +18,9 @@
     $ques4 = $_POST['ques4'];
     $remarks = $_POST['remarks'];
 
-    $query = mysqli_query($con, "INSERT INTO `feedback`(`id`, `sem`, `date`, `branch`, `section`, `subject`, `ques1`, `ques2i`, `ques2ii`, `ques2iii`, `ques2iv`, `ques2v`, `ques3`, `ques4`, `remarks`) 
-                                 VALUES ('', '$sem', '$date', '$branch', '$section', '$subject', '$ques1', '$ques2i', '$ques2ii', '$ques2iii', '$ques2iv', '$ques2v', '$ques3', '$ques4', '$remarks')");
-
+    $query = mysqli_prepare($con, "INSERT INTO `feedback`(`id`, `sem`, `date`, `branch`, `section`, `subject`, `ques1`, `ques2i`, `ques2ii`, `ques2iii`, `ques2iv`, `ques2v`, `ques3`, `ques4`, `remarks`) 
+                                 VALUES ('', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->bind_param("ssssssssssssss",$sem,$date,$branch,$section,$subject,$ques1,$ques2i,$ques2ii,$ques2iii,$ques2iv,$ques2v,$ques3,$ques4,$remarks);
+    $query->execute();
     echo '<script>alert("Thank you for the feedback."); location.replace(document.referrer);</script>';
 ?>
